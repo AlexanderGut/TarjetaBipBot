@@ -86,10 +86,10 @@ class TelegramApi(Resource):
                 res = saldobip.get_data()
                 if res['ok']:
                     msg = (
-                        f"No° de tarjeta: {res['card_id']}"
-                        f"Estado de contrato: {res['state']}"
-                        f"Saldo: {res['balance']}"
-                        f"Fecha saldo: {res['balance_date']}"
+                        f"No° de tarjeta: {res['card_id']}\n"
+                        f"Estado de contrato: {res['state']}\n"
+                        f"Saldo: {res['balance']}\n"
+                        f"Fecha saldo: {res['balance_date']}\n"
                     )
 
                 else:
