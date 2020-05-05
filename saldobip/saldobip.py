@@ -67,6 +67,7 @@ class SaldoBip:
                 "balance": data_list[2].text,
                 "balance_date": data_list[3].text
             }
+
         else:
             return {"ok": False}
 
@@ -102,10 +103,11 @@ class TelegramApi(Resource):
             if message.text == '/start':
                 msg = (
                     "¡Bienvenido a TarjetaBipBot!\n"
-                    "Solo debes escribir el numero de tu tarjeta bip para hacer la consulta de tu saldo."
+                    "Con el número de tu tarjeta bip puedes hacer la consulta de tu saldo."
                 )
+
             else:
-                msg = "El comando no es valido"
+                msg = "El comando no es válido"
 
         bot.send_message(msg)
 
@@ -113,7 +115,24 @@ class TelegramApi(Resource):
 class ConsultaSaldoApi(Resource):
 
     def get(self, card_id):
-        pass
+        if card_id:
+            try:
+                saldobip = SaldoBip(int(card_id))
+                res = saldobip.get_data()
+                if res['ok']:
+                    return res, 200
+
+                else:
+                    return {
+                        'ok': False,
+                        'message': "Error en la consulta"
+                    }, 404
+
+            except Exception as e:
+                return {
+                           'ok': False,
+                           'message': "No de tarjeta no valido"
+                }, 400
 
 
 routes = [
